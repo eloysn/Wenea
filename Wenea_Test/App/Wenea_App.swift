@@ -1,6 +1,5 @@
 //
-//  Wenea_TestApp.swift
-//  Wenea_Test
+//  Wenea_App.swift
 //
 //  Created by eloysn on 27/1/23.
 //
@@ -8,10 +7,10 @@
 import SwiftUI
 
 @main
-struct Wenea_TestApp: App {
+struct Wenea_App: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            LoginView(loginViewModel: LoginViewModel())
         }
     }
 }
