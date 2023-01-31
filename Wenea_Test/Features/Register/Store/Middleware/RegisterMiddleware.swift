@@ -5,4 +5,13 @@
 //  Created by eloysn on 30/1/23.
 //
 
-import Foundation
+import Combine
+import Dispatch
+
+protocol RegisterMiddleware  {
+    func redux(
+        state: RegisterState,
+        action: RegisterAction,
+        queue: DispatchQueue
+    ) -> AnyPublisher<RegisterAction, Error>?
+}

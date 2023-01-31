@@ -8,13 +8,12 @@
 import SwiftUI
 
 struct PrimaryButtonStyle: ButtonStyle {
-
-    @State var color: Color = .indigo
-
+    
+    @State var color: Color = .primaryColor
+    
     func makeBody(configuration: Configuration) -> some View {
-            configuration.label
-            .font(.title.bold())
-            .padding()
+        configuration.label
+            .padding(.all, 20)
             .frame(maxWidth: .infinity)
             .foregroundColor(.white)
             .background(color)

@@ -5,4 +5,8 @@
 //  Created by eloysn on 28/1/23.
 //
 
-import Foundation
+enum LoginAction {
+    case onLogin(email: String, pass: String)
+    case onUserLoged
+    case onFailedLogin(message: String)
+}

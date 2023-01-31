@@ -1,5 +1,5 @@
 //
-//  LoginViewModel.swift
+//  LoginStore.swift
 //  Wenea_Test
 //
 //  Created by eloysn on 27/1/23.
@@ -9,64 +9,33 @@ import SwiftUI
 import Combine
 
 final class LoginStore: ObservableObject {
-    private let loginUseCase: LoginUseCase
-    
+    private let reducer: LoginReducer
+    private let middlewares: [LoginMiddleware]
+    private var cancellables: Set<AnyCancellable> = .init()
+    private let queue: DispatchQueue
+
+    @Published var state: LoginState
     init(
-        loginUseCase: LoginUseCase
+        loginUseCase: LoginUseCase,
+        initialState: LoginState = LoginState()
     ) {
-        self.loginUseCase = loginUseCase
+        self.state = initialState
+        self.reducer = LoginReducer()
+        self.middlewares = [
+            UserLoginMiddleware(loginUseCase: loginUseCase)
+        ]
+        self.queue = DispatchQueue.main
     }
-    
-    deinit {
-    }
-    
-}
+    func dispatch(action: LoginAction) {
+        reducer.redux(state: &state, action: action)
 
-
-extension LoginViewModel {
-    enum State {
-        case idle
-        case loading
-        case loged
-        case error(Error)
-    }
-    
-    enum Event {
-        case onLogin(user: User)
-        case onUserLoged
-        case onFailedLogin(Error)
-        
-        var onLogin: User? {
-            if case let .onLogin(user) = self {
-                return user
-            }
-            return nil
+        middlewares.forEach { middleware in
+            guard let middleware = middleware.redux(state: state, action: action, queue: queue)
+            else { return }
+            middleware
+                .receive(on: queue)
+                .sink(receiveCompletion: { _ in }, receiveValue: dispatch)
+                .store(in: &cancellables)
         }
     }
 }
-
-extension LoginViewModel {
-    func reduce(_ state: State, _ event: Event) -> State {
-        switch event {
-        case .onLogin: return .loading
-        case .onUserLoged: return .loged
-        case .onFailedLogin(let error): return .error(error)
-        }
-    }
-    
-    func userLoged(input: AnyPublisher<Event, Never>) -> Feedback<State, Event> {
-        Feedback { (state: State) -> AnyPublisher<Event, Never> in
-            //guard case .loading = state else { return Empty().eraseToAnyPublisher() }
-            return input.compactMap(\.onLogin)
-                .flatMap { self.loginUseCase.login(with: $0) }
-                .map { _ in Event.onUserLoged }
-                .catch { Just(Event.onFailedLogin($0)) }
-                .eraseToAnyPublisher()
-        }
-    }
-    
-    func userInput(input: AnyPublisher<Event, Never>) -> Feedback<State, Event> {
-        Feedback { _ in input }
-    }
-}
-

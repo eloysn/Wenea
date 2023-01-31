@@ -6,3 +6,16 @@
 //
 
 import Foundation
+
+struct UserData: Codable {
+    let name: String
+    let email: String
+    let pass: String
+    
+    init(params: RegisterParams) {
+        self.name = params.name
+        self.email = params.email
+        self.pass = params.password
+    }
+}
+

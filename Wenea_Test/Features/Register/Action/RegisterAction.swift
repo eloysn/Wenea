@@ -5,4 +5,8 @@
 //  Created by eloysn on 30/1/23.
 //
 
-import Foundation
+enum RegisterAction {
+    case onRegister(user: User)
+    case onUserRegister
+    case onFailedRegister(message: String)
+}

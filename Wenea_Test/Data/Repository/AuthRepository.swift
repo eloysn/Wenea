@@ -6,22 +6,29 @@
 //
 
 import Combine
-
+ 
 protocol AuthRepository {
     func login(params: LoginParams) -> AnyPublisher<Bool, Error>
+    func register(params: RegisterParams) -> AnyPublisher<Bool, Error>
 }
 
-final class LoginRepositoryImpl: AuthRepository {
-    private let loginService: AuthService
+final class AuthRepositoryImpl: AuthRepository {
+    private let authService: AuthService
     
     public init(
-        loginService: AuthService
+        authService: AuthService
     ) {
-        self.loginService = loginService
+        self.authService = authService
     }
 
     func login(params: LoginParams) -> AnyPublisher<Bool, Error> {
-        loginService.login(params: params)
+        authService.login(params: params)
+            .map { $0.result }
+            .eraseToAnyPublisher()
+    }
+    
+    func register(params: RegisterParams) -> AnyPublisher<Bool, Error> {
+        authService.register(params: params)
             .map { $0.result }
             .eraseToAnyPublisher()
     }

@@ -6,3 +6,10 @@
 //
 
 import Foundation
+
+struct AppConfiguration {
+    let gMapsApiKey: String = "AIzaSyD0hl9-SzA9IHmMTV5RgB-dTGoGMFl62sQ"
+    let defaultMapCoordinates = Coordinates(latitude: 40.416775, longitude: -3.703790)
+    let defaultMapZoom: Float = 15
+}
+

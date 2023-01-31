@@ -13,9 +13,6 @@ final class DataContainerDIImpl: DataContainerDI {
     private init() {}
     static let shared = DataContainerDIImpl()
 
-//    var everyThingMapApiService: EveryThingMapApiService = EveryThingMapApiServiceImpl(
-//        baseURL: UIApplication.serviceLocator.appConfiguration.serverHostCustomMap,
-//        version: UIApplication.serviceLocator.appConfiguration.serverApiVersionCustomMap,
-//        service: "everythingmap"
-//    )
+    var authService: AuthService = AuthServiceImpl()
+    var mapService: MapService = MapServiceImpl()
 }

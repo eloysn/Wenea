@@ -5,4 +5,10 @@
 //  Created by eloysn on 29/1/23.
 //
 
-import Foundation
+import CoreLocation.CLLocation
+
+struct MapParams {
+    let location: CLLocation
+    let count: Int
+    let filter: MapElementType?
+}

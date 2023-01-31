@@ -12,16 +12,16 @@ protocol LoginUseCase {
 }
 
 final class LoginCaseImpl: LoginUseCase {
-    private let loginRepository: LoginRepository
+    private let authRepository: AuthRepository
 
-    public init(
-        loginRepository: LoginRepository
+    init(
+        authRepository: AuthRepository
     ) {
-        self.loginRepository = loginRepository
+        self.authRepository = authRepository
     }
 
     func login(with user: User) -> AnyPublisher<Bool, Error> {
-        loginRepository
+        authRepository
             .login(params: LoginParams(email: user.email, password: user.password))
             .eraseToAnyPublisher()
     }

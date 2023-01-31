@@ -5,4 +5,8 @@
 //  Created by eloysn on 30/1/23.
 //
 
-import Foundation
+struct RegisterState: Modifiable {
+    var loading: Bool = false
+    var messageError: String? = nil
+    var userRegister: Bool = false
+}

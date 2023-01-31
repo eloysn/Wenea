@@ -43,6 +43,26 @@ public struct UserDefault<T> {
     }
 }
 
+@propertyWrapper
+public struct UserDefaultCodable<T: Codable> {
+    let key: UserDefaultKey
+    let defaultValue: T
+    let userDefaultsSuite : UserDefaults = UserDefaults.standard
+    
+    public var wrappedValue: T {
+        get {
+            if let r = userDefaultsSuite.object(forKey: key.rawValue) as? Data, let orgVal = try? JSONDecoder().decode(T.self, from: r) {
+                return orgVal
+            }
+            else { return defaultValue}
+        }
+        set {
+            let s = try! JSONEncoder().encode(newValue)
+            userDefaultsSuite.set(s, forKey: key.rawValue)
+        }
+    }
+}
+
 public enum UserDefaultKey: String {
     case users
 }

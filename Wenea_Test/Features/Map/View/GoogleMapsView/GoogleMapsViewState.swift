@@ -8,9 +8,11 @@
 import Foundation
 
 struct GoogleMapsViewState: Modifiable {
-//    var userLocation: CustomMapCoordinates?
-//    var mapCentre: CustomMapCoordinates?
+    var mapCentre: Coordinates?
     var zoom: Float?
-    var userLocationEnable: Bool = false
-//    var markers: [MarkerInfo] = []
+    var markers: [MarkerInfo] = []
+    var filterType: MarkerInfoType?
+    var loading: Bool = false
 }
+
+

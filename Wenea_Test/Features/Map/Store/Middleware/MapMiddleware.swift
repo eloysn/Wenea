@@ -5,4 +5,13 @@
 //  Created by eloysn on 29/1/23.
 //
 
-import Foundation
+import Dispatch
+import Combine
+
+protocol MapMiddleware  {
+    func redux(
+        state: MapState,
+        action: MapAction,
+        queue: DispatchQueue
+    ) -> AnyPublisher<MapAction, Error>?
+}
