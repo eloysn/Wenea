@@ -18,7 +18,6 @@ final class MapServiceImpl: MapService {
         Just(mock.getMockLocationsFor(location: params.location, itemCount: params.count))
             .map(MapResponse.init)
             .setFailureType(to: Error.self)
-            .delay(for: 2, scheduler: RunLoop.main)
             .eraseToAnyPublisher()
     }
 }

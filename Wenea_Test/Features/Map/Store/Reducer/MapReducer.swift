@@ -24,7 +24,7 @@ final class MapReducer {
             state = state
                 .set(\.mapState.mapCentre, coordinates)
                 .set(\.mapState.zoom, zoom)
-                .set(\.mapState.loading, true)
+                //.set(\.mapState.loading, true)
 
         case let .setMapInfo(mapInfo):
             state = state
@@ -34,7 +34,7 @@ final class MapReducer {
         case .setFilter(let type):
             state = state
                 .set(\.mapState.filterType, type)
-                .set(\.mapState.loading, true)
+                //.set(\.mapState.loading, true)
         }
     }
 }

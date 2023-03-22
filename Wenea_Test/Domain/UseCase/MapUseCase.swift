@@ -24,7 +24,7 @@ final class MapUseCaseImpl: MapUseCase {
     func getMapInfo(coordinates: Coordinates, filter: MarkerInfoType?) -> AnyPublisher<MapElements, Error> {
         mapRepository.get(params: MapParams(
             location: coordinates.toCLLocation,
-            count: Int.random(in: 50...200),
+            count: Int.random(in: 150...300),
             filter: filter?.asElementType))
     }
 }
