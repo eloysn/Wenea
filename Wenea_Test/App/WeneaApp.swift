@@ -11,6 +11,7 @@ struct WeneaApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     var body: some Scene {
         WindowGroup {
+            
             LoginView(store: LoginStore(loginUseCase: DomainContainerDIImpl.shared.loginUseCase))
         }
     }
